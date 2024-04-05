@@ -15,7 +15,7 @@ float pitch[ARRAY_SIZE][2];
 // Function prototypes
 void noteOnHandler(byte channel, byte note, byte velocity);
 void noteOffHandler(byte channel, byte note, byte velocity);
-float midiToFrequency(byte note);
+float midi2freq(byte note);
 
 void setup() {
   // Initialize MIDI
@@ -33,7 +33,7 @@ void loop() {
 void noteOnHandler(byte channel, byte note, byte velocity) {
   // Calculate volume and pitch
   float vol = velocity / 127.0;
-  float freq = midiToFrequency(note);
+  float freq = midi2freq(note);
 
   // Store volume and pitch in the 2D array
   volume[note][0] = vol;
@@ -52,6 +52,7 @@ void noteOffHandler(byte channel, byte note, byte velocity) {
 }
 
 // MIDI note to frequency conversion
-float midiToFrequency(byte note) {
+// ref: https://newt.phys.unsw.edu.au/jw/notes.html
+float midi2freq(byte note) {
   return pow(2, (note - 69) / 12.0) * 440;
 }

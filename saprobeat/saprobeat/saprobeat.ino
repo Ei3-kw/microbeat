@@ -5,7 +5,7 @@
 MIDI_CREATE_DEFAULT_INSTANCE();
 
 // FFT instance
-arduinoFFT FFT = arduinoFFT();
+ArduinoFFT<float> FFT;
 
 // 2D array to store volume and pitch
 const int ARRAY_SIZE = 128;
@@ -15,7 +15,7 @@ float pitch[ARRAY_SIZE][2];
 // Function prototypes
 void noteOnHandler(byte channel, byte note, byte velocity);
 void noteOffHandler(byte channel, byte note, byte velocity);
-float midiToFrequency(byte note);
+float midi2freq(byte note);
 
 void setup() {
   // Initialize MIDI
@@ -33,7 +33,7 @@ void loop() {
 void noteOnHandler(byte channel, byte note, byte velocity) {
   // Calculate volume and pitch
   float vol = velocity / 127.0;
-  float freq = mtof(note);
+  float freq = midi2freq(note);
 
   // Store volume and pitch in the 2D array
   volume[note][0] = vol;
@@ -47,10 +47,11 @@ void noteOffHandler(byte channel, byte note, byte velocity) {
   // Clear the volume and pitch data for the note
   volume[note][0] = 0.0;
   volume[note][1] = 0.0;
+  pitch[note][0] = 0.0;
   pitch[note][1] = 0.0;
 }
 
 // MIDI note to frequency conversion
-float mtof(byte note) {
+float midi2freq(byte note) {
   return pow(2, (note - 69) / 12.0) * 440;
 }
