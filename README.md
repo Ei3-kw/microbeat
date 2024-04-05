@@ -1,7 +1,7 @@
 # microbeat
 
 ## Structure
-![Flowchart](media/flowchart.png)
+![Flowchart](./media/flowchart.png)
 
 ## Usage
 - **Accessibility -** Make music accessible to people with low musicality or hearing loss
