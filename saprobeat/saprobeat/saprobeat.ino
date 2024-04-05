@@ -18,7 +18,7 @@ void noteOffHandler(byte channel, byte note, byte velocity);
 float midi2freq(byte note);
 
 void setup() {
-  // Initialize MIDI
+  // Initialise MIDI
   MIDI.begin(MIDI_CHANNEL_OMNI);
   MIDI.setHandleNoteOn(noteOnHandler);
   MIDI.setHandleNoteOff(noteOffHandler);

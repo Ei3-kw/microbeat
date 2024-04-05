@@ -1,5 +1,6 @@
 #include <MIDI.h>
 #include <arduinoFFT.h>
+#include <Arduino.h>
 
 // MIDI instance
 MIDI_CREATE_DEFAULT_INSTANCE();
@@ -7,18 +8,22 @@ MIDI_CREATE_DEFAULT_INSTANCE();
 // FFT instance
 ArduinoFFT<float> FFT;
 
-// 2D array to store volume and pitch
-const int ARRAY_SIZE = 128;
-float volume[ARRAY_SIZE][2];
-float pitch[ARRAY_SIZE][2];
+// 3D array to store duration, volume, pitch & channel
+const int ARRAY_SIZE = 128; // change me if needed
+float duration[ARRAY_SIZE];
+float volume[ARRAY_SIZE];
+float pitch[ARRAY_SIZE];
+int channel[ARRAY_SIZE];
 
 // Function prototypes
-void noteOnHandler(byte channel, byte note, byte velocity);
-void noteOffHandler(byte channel, byte note, byte velocity);
+void noteOnHandler(byte ch, byte note, byte velocity);
+void noteOffHandler(byte ch, byte note, byte velocity);
 float midi2freq(byte note);
 
 void setup() {
-  // Initialize MIDI
+  Serial.begin(9600);
+
+  // Initialise MIDI
   MIDI.begin(MIDI_CHANNEL_OMNI);
   MIDI.setHandleNoteOn(noteOnHandler);
   MIDI.setHandleNoteOff(noteOffHandler);
@@ -30,25 +35,53 @@ void loop() {
 }
 
 // MIDI note on event handler
-void noteOnHandler(byte channel, byte note, byte velocity) {
+void noteOnHandler(byte ch, byte note, byte velocity) {
   // Calculate volume and pitch
-  float vol = velocity / 127.0;
+  float vol = velocity / 127.0; // 0 = no sound, 127 = max sound
   float freq = midi2freq(note);
 
-  // Store volume and pitch in the 2D array
-  volume[note][0] = vol;
-  volume[note][1] = millis();
-  pitch[note][0] = freq;
-  pitch[note][1] = millis();
+  // Store in a 4D array
+  duration[note] = millis();
+  volume[note] = vol;
+  pitch[note] = freq;
+  channel[note] = (int)ch;
+
+  // testing
+  Serial.print("Note: ");
+  Serial.print(note);
+  Serial.print(", Channel: ");
+  Serial.print(channel[note]);
+  Serial.print(", Duration: ");
+  Serial.print(duration[note]);
+  Serial.print(", Pitch: ");
+  Serial.println(pitch[note]);
+  Serial.print(", Volume: ");
+  Serial.print(volume[note]);
+  Serial.print(", Pitch: ");
+  Serial.println(pitch[note]);
 }
 
 // MIDI note off event handler
-void noteOffHandler(byte channel, byte note, byte velocity) {
-  // Clear the volume and pitch data for the note
-  volume[note][0] = 0.0;
-  volume[note][1] = 0.0;
-  pitch[note][0] = 0.0;
-  pitch[note][1] = 0.0;
+void noteOffHandler(byte ch, byte note, byte velocity) {
+  // reset 4D array
+  duration[note] = 0.0;
+  volume[note] = 0.0;
+  pitch[note] = 0.0;
+  channel[note] = 0;
+
+  // testing
+  Serial.print("Note: ");
+  Serial.print(note);
+  Serial.print(", Channel: ");
+  Serial.print(channel[note]);
+  Serial.print(", Duration: ");
+  Serial.print(duration[note]);
+  Serial.print(", Pitch: ");
+  Serial.println(pitch[note]);
+  Serial.print(", Volume: ");
+  Serial.print(volume[note]);
+  Serial.print(", Pitch: ");
+  Serial.println(pitch[note]);
 }
 
 // MIDI note to frequency conversion
