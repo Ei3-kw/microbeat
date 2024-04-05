@@ -12,6 +12,11 @@ const int ARRAY_SIZE = 128;
 float volume[ARRAY_SIZE][2];
 float pitch[ARRAY_SIZE][2];
 
+// Function prototypes
+void noteOnHandler(byte channel, byte note, byte velocity);
+void noteOffHandler(byte channel, byte note, byte velocity);
+float midiToFrequency(byte note);
+
 void setup() {
   // Initialize MIDI
   MIDI.begin(MIDI_CHANNEL_OMNI);
