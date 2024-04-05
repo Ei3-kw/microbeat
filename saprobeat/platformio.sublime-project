@@ -1,0 +1,108 @@
+{
+	"build_systems":
+	[
+		{
+			"cmd":
+			[
+				"/Users/ella/Library/Python/3.11/lib/python/site-packages/platformio/__main__.py",
+				"-c", "sublimetext",
+				"run"
+			],
+			"file_regex": "^(..[^:\n]*):([0-9]+):?([0-9]+)?:? (.*)$",
+			"name": "PlatformIO",
+			"variants":
+			[
+				{
+					"cmd":
+					[
+						"/Users/ella/Library/Python/3.11/lib/python/site-packages/platformio/__main__.py",
+						"-c", "sublimetext",
+						"run"
+					],
+					"file_regex": "^(..[^:\n]*):([0-9]+):?([0-9]+)?:? (.*)$",
+					"name": "Build"
+				},
+				{
+					"cmd":
+					[
+						"/Users/ella/Library/Python/3.11/lib/python/site-packages/platformio/__main__.py",
+						"-c", "sublimetext",
+						"run",
+						"--target",
+						"upload"
+					],
+					"file_regex": "^(..[^:\n]*):([0-9]+):?([0-9]+)?:? (.*)$",
+					"name": "Upload"
+				},
+				{
+					"cmd":
+					[
+						"/Users/ella/Library/Python/3.11/lib/python/site-packages/platformio/__main__.py",
+						"-c", "sublimetext",
+						"run",
+						"--target",
+						"clean"
+					],
+					"file_regex": "^(..[^:\n]*):([0-9]+):?([0-9]+)?:? (.*)$",
+					"name": "Clean"
+				},
+				{
+					"cmd":
+					[
+						"/Users/ella/Library/Python/3.11/lib/python/site-packages/platformio/__main__.py",
+						"-c", "sublimetext",
+						"test"
+					],
+					"file_regex": "^(..[^:\n]*):([0-9]+):?([0-9]+)?:? (.*)$",
+					"name": "Test"
+				},
+				{
+					"cmd":
+					[
+						"/Users/ella/Library/Python/3.11/lib/python/site-packages/platformio/__main__.py",
+						"-c", "sublimetext",
+						"run",
+						"--target",
+						"uploadfs"
+					],
+					"file_regex": "^(..[^:\n]*):([0-9]+):?([0-9]+)?:? (.*)$",
+					"name": "Upload SPIFFS image"
+				},
+				{
+					"cmd":
+					[
+						"/Users/ella/Library/Python/3.11/lib/python/site-packages/platformio/__main__.py",
+						"-c", "sublimetext",
+						"update"
+					],
+					"file_regex": "^(..[^:\n]*):([0-9]+):?([0-9]+)?:? (.*)$",
+					"name": "Update platforms and libraries"
+				},
+				{
+					"cmd":
+					[
+						"/Users/ella/Library/Python/3.11/lib/python/site-packages/platformio/__main__.py",
+						"-c", "sublimetext",
+						"upgrade"
+					],
+					"name": "Upgrade PlatformIO Core"
+				}
+			],
+			"working_dir": "${project_path:${folder}}",
+			"selector": "source.c, source.c++"
+		}
+	],
+	"folders":
+	[
+		{
+			"path": "."
+		}
+	],
+    "settings":
+    {
+         "sublimegdb_workingdir": "/Users/ella/Documents/dev/microbeat",
+         "sublimegdb_exec_cmd": "",
+         "sublimegdb_commandline": "/Users/ella/Library/Python/3.11/lib/python/site-packages/platformio/__main__.py -f -c sublimetext debug --interface=gdb --interpreter=mi -x .pioinit"
+
+    }
+}
