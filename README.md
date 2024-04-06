@@ -16,9 +16,21 @@
 - C++
 - how to flash from ARM chip mac to arduino
 
+## Log
+*Starting time: 2024-04-05 7.30pm*
+- Brainstorm & Init structure set up - *1h in*
+
+### Ella
+- Cpp compile & flash onto uno using platformio (pio) 	- *8h in*
+- Midi -> 4D array										- *9h in*
+- Live BPM detect
+
+### Jack
+
 
 ## Known issues/ concerns
 - passing 4D array (channel, duration, volume, pitch) might introduce competing issue
+- We might want seperate midis for music & environment - BPM read off env would be noisy
 
 
 ## Special thx to
