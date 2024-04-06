@@ -1,42 +1,46 @@
-// #include <iostream>
-// #include <cstdlib>
-// #include <vector>
-// #include <RtMidi.h>
+#include <ArduinoFFT.h>
 
-// // Function to be called when a MIDI message is received
-// void midiCallback(double deltaTime, std::vector<unsigned char>* message, void* userData) {
-//     // Extract MIDI message data
-//     unsigned int nBytes = message->size();
-//     for (unsigned int i = 0; i < nBytes; i++) {
-//         std::cout << "Byte " << i << " = " << (int)message->at(i) << ", ";
-//     }
-//     if (nBytes > 0)
-//         std::cout << "deltaTime = " << deltaTime << std::endl;
-// }
+// Define the number of samples to read and the sampling rate
+const int NUM_SAMPLES = 256;
+const int SAMPLING_RATE = 8000;
 
-// int main() {
-//     RtMidiIn midiIn;
+float vReal[NUM_SAMPLES];
+float vImag[NUM_SAMPLES];
 
-//     try {
-//         // Open the first available MIDI input port
-//         midiIn.openPort();
+ArduinoFFT<float> FFT = ArduinoFFT<float>(vReal, vImag, NUM_SAMPLES, SAMPLING_RATE); /* Create FFT object */
 
-//         // Set the callback function for MIDI input
-//         midiIn.setCallback(&midiCallback);
+void setup() {
+    Serial.begin(9600);
+}
 
-//         // Ignore sysex, timing, and active sensing messages.
-//         midiIn.ignoreTypes(true, true, true);
+void loop() {
+    // Read the raw audio data into an array
+    double samples[NUM_SAMPLES];
+    for (int i = 0; i < NUM_SAMPLES; i++) {
+        samples[i] = analogRead(A0);
+    }
 
-//         std::cout << "Reading MIDI input. Press Enter to quit.\n";
-//         char input;
-//         std::cin.get(input);
-//     } catch (RtMidiError &error) {
-//         error.printMessage();
-//     }
+    // Perform the FFT on the raw audio data
+    double vReal[NUM_SAMPLES];
+    double vImag[NUM_SAMPLES];
+    for (int i = 0; i < NUM_SAMPLES; i++) {
+        vReal[i] = samples[i];
+        vImag[i] = 0;
+    }
+    FFT.windowing(FFTWindow::Hamming, FFTDirection::Forward); /* Weigh data */
+    FFT.compute(FFTDirection::Forward); /* Compute FFT */
+    FFT.complexToMagnitude(); /* Compute magnitudes */
+    // float x = FFT.majorPeak();
 
-//     return 0;
-// }
+  // Extract the volume and frequency pairs
+  for (int i = 2; i < (NUM_SAMPLES / 2); i++) {
+      double freq = (i * 1.0 * SAMPLING_RATE) / NUM_SAMPLES;
+      double volume = vReal[i];
+      Serial.print("Frequency: ");
+      Serial.print(freq);
+      Serial.print(" Hz, Volume: ");
+      Serial.println(volume);
+  }
 
-void setup() {}
-void loop() {}
-
+  delay(100);
+}
