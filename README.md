@@ -1,9 +1,13 @@
 # microbeat
 
-## Name
+## Names
 - microbeat = microbe + beat (also doubled as microcontroller beat)
-- aaprobeat (saprobe := decomposer subtype fungi)
+- phoebeat = phoebe flycatcher + beat
+![phoebe](./media/phoebe.png)
+- saprobeat (saprobe := decomposer subtype fungi)
+![saprobe](./media/saprobe.jpeg)
 - astilbeat (astilbe := plant w/ tiny white, pink, or red flowers)
+![astilbe](./media/astilbe.jpeg)
 
 ## Structure
 ![Flowchart](./media/flowchart.png)
@@ -38,7 +42,7 @@
 ## Known issues/ concerns
 - passing 4D array (channel, duration, volume, pitch) might introduce competing issue [multi threads]
 - We might want seperate midis for music & environment - BPM read off env would be noisy
-
+- imagine a song without drums (detecting BPM)
 
 ## Special thx to
 - Suppliers to hardwares (RGB light, arduino, sound sensors) tha may or may not be present
