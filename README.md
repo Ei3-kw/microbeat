@@ -34,7 +34,8 @@
 - Midi -> 4D array										- *9h in*
 - Live BPM detect										- *15h in*
 - Set up MIDI circuit									- ABANDONED
-- All above features tested								-
+- All above features tested								- ABANDONED, MIDI SUCKS
+-
 
 ### Jack (astilbeat)
 

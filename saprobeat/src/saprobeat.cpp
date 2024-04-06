@@ -52,9 +52,8 @@ void loop() {
     // Display the 2D spectrum
     for (int y = 0; y < SIZE; y++) {
         for (int x = 0; x < SIZE; x++) {
-            // Your display logic here, e.g., using an LED matrix
-            // or sending the data to a connected display
-            displayPixel(x, y, spectrum2D[y][x] * 255);
+            // display
+            ...
         }
     }
 }
