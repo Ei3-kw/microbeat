@@ -24,10 +24,11 @@
 ## What we learnt
 - C++
 - how to flash from ARM chip mac to arduino
+- ncurses
 
 ## Log
 *Starting time: 2024-04-05 7.30pm*
-- Brainstorm & Init structure set up - *1h in*
+- Brainstorm & Init structure set up 					- *1h in*
 
 ### Ella (saprobeat)
 - Cpp compile & flash onto uno using platformio (pio) 	- *8h in*
@@ -35,7 +36,13 @@
 - Live BPM detect										- *15h in*
 - Set up MIDI circuit									- ABANDONED
 - All above features tested								- ABANDONED, MIDI SUCKS
-- Visualisor (screen)									- *25h in*
+- MENTAL BREAKDOWN										- *16h-22h in*
+- screen visualisor draft (python)						- *23h in*
+- ncurses attempt (visualisor in terminal)				- *24h in*
+- refined visualisor (screen)							- *25h in*
+- update r, g, b, delay & fade while displaying			- *28h in*
+- Extract BPM, volume & pitch from raw audio
+
 
 ### Jack (astilbeat)
 
