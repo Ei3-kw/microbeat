@@ -14,7 +14,7 @@
 ![old design](./media/originalDesign.png)
 
 ### Final Design
-![Flowchart](./media/flowchart.png)
+![microbeat](./media/microbeat.png)
 
 ## Usage
 - **Accessibility -** Make music accessible to people with low musicality or hearing loss
