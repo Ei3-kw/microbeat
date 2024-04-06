@@ -1,6 +1,6 @@
 # microbeat
 
-## Names
+## Funny Names
 - microbeat = microbe + beat (also doubled as microcontroller beat)
 - phoebeat = phoebe flycatcher + beat
 ![phoebe](./media/phoebe.png)
@@ -10,6 +10,10 @@
 ![astilbe](./media/astilbe.jpeg)
 
 ## Structure
+### Original Design
+![old design](./media/originalDesign.png)
+
+### Final Design
 ![Flowchart](./media/flowchart.png)
 
 ## Usage
@@ -30,7 +34,7 @@
 *Starting time: 2024-04-05 7.30pm*
 - Brainstorm & Init structure set up 					- *1h in*
 
-### Ella (saprobeat)
+### Ella (saprobeat & phoebeat)
 - Cpp compile & flash onto uno using platformio (pio) 	- *8h in*
 - Midi -> 4D array										- *9h in*
 - Live BPM detect										- *15h in*
@@ -41,6 +45,7 @@
 - ncurses attempt (visualisor in terminal)				- *24h in*
 - refined visualisor (screen)							- *25h in*
 - update r, g, b, delay & fade while displaying			- *28h in*
+- merged saprobeat into main 							- *28h in*
 - Extract BPM, volume & pitch from raw audio
 
 
