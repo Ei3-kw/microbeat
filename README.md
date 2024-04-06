@@ -35,7 +35,7 @@
 - Live BPM detect										- *15h in*
 - Set up MIDI circuit									- ABANDONED
 - All above features tested								- ABANDONED, MIDI SUCKS
--
+- Visualisor (screen)									- *25h in*
 
 ### Jack (astilbeat)
 

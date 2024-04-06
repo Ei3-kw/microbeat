@@ -16,6 +16,8 @@ int main() {
     initscr();
     curs_set(0);
     nodelay(stdscr, TRUE);
+    start_color();
+    init_pair(1, COLOR_GREEN, COLOR_BLACK);
     srand(time(NULL));
 
     // Create an array to store the screen
@@ -43,17 +45,21 @@ int main() {
             break;
         }
 
-        // Clear the screen
-        if (count % 4 == 0) {
-            memset(screen, ' ', sizeof(screen));
-        }
-
         // Display the rain effect
         for (int i = 0; i < WIDTH / FONT_PX; i++) {
             screen[drops[i]][i] = letters[rand() % NUM_LETTERS];
             drops[i] += 1;
             if (drops[i] >= HEIGHT / FONT_PX || rand() > 0.95 * RAND_MAX) {
                 drops[i] = 0;
+            }
+        }
+
+        // Clear the screen
+        if (count % (rand()%2+1) == 0) {
+            for (int y = 0; y < HEIGHT; y++) {
+                for (int x = 0; x < WIDTH; x++) {
+                    mvaddch(y * FONT_PX, x, ' ');
+                }
             }
         }
 

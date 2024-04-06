@@ -9,7 +9,7 @@ width = screen_info.current_w
 height = screen_info.current_h
 
 winsur = pygame.display.set_mode((width, height))
-font = pygame.font.SysFont('', 23)
+font = pygame.font.SysFont('andalemono', 21)
 bg = pygame.Surface((width, height), flags=pygame.SRCALPHA)
 screen = pygame.display.set_mode((width, height), pygame.FULLSCREEN)
 
