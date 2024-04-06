@@ -33,8 +33,8 @@
 - Cpp compile & flash onto uno using platformio (pio) 	- *8h in*
 - Midi -> 4D array										- *9h in*
 - Live BPM detect										- *15h in*
-- Set up MIDI circuit
-- All above features tested
+- Set up MIDI circuit									- ABANDONED
+- All above features tested								-
 
 ### Jack (astilbeat)
 
