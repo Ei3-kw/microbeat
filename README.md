@@ -2,11 +2,11 @@
 
 ## Funny Names
 - microbeat = microbe + beat (also doubled as microcontroller beat)
-- phoebeat = phoebe flycatcher + beat
+- **audio -> visual:** phoebeat = phoebe flycatcher + beat
 ![phoebe](./media/phoebe.png)
-- saprobeat (saprobe := decomposer subtype fungi)
+- **visualisor:** saprobeat (saprobe := decomposer subtype fungi)
 ![saprobe](./media/saprobe.jpeg)
-- astilbeat (astilbe := plant w/ tiny white, pink, or red flowers)
+- **audio input:** astilbeat (astilbe := plant w/ tiny white, pink, or red flowers)
 ![astilbe](./media/astilbe.jpeg)
 
 ## Structure
@@ -46,11 +46,19 @@
 - refined visualisor (screen)							- *25h in*
 - update r, g, b, delay & fade while displaying			- *28h in*
 - merged saprobeat into main 							- *28h in*
-- Extract BPM, volume & pitch from raw audio
+- FFT to extract BPM, volume & pitch from raw audio 	- *31h in* (code compiled)
+- Allow reading from A0-A5
+- Cpp & python binding
+- python animation design/ update formulas
+- Presentation prep
+	- 5min DJ set
+	- Easter egg?
 
 
 ### Jack (astilbeat)
-
+- Get analog audio onto arduino **REMEMBER ADJUST VOLTAGE TO POSSITIVE**
+- Presentation prep
+	- explain the principle using theramin?
 
 ## Known issues/ concerns
 - passing 4D array (channel, duration, volume, pitch) might introduce competing issue [multi threads]
@@ -58,7 +66,8 @@
 - imagine a song without drums (detecting BPM)
 
 ## Special thx to
-- Suppliers to hardwares (RGB light, arduino, sound sensors) tha may or may not be present
+- everyone who offered helps
+- Suppliers of hardwares (arduino, sound sensors) tha may or may not be present
 
 
 
