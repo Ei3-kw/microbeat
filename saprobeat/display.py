@@ -31,7 +31,7 @@ while True:
             if change[32]:
                 exit()
 
-    pygame.time.delay(30)
+    pygame.time.delay(69)
 
     winsur.blit(bg, (0, 0))
 

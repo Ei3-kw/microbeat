@@ -1,0 +1,55 @@
+Processing uno (platform: atmelavr; board: uno; framework: arduino; lib_deps: MIDI Library, arduinoFFT)
+--------------------------------------------------------------------------------
+CONFIGURATION: https://docs.platformio.org/page/boards/atmelavr/uno.html
+PLATFORM: Atmel AVR (5.0.0) > Arduino Uno
+HARDWARE: ATMEGA328P 16MHz, 2KB RAM, 31.50KB Flash
+DEBUG: Current (avr-stub) External (avr-stub, simavr)
+PACKAGES: 
+ - framework-arduino-avr @ 5.2.0 
+ - toolchain-atmelavr @ 1.70300.191015 (7.3.0)
+LDF: Library Dependency Finder -> https://bit.ly/configure-pio-ldf
+LDF Modes: Finder ~ chain, Compatibility ~ soft
+Found 7 compatible libraries
+Scanning dependencies...
+Dependency Graph
+|-- MIDI Library @ 5.0.2 (License: MIT, Path: /Users/ella/.platformio/lib/MIDI)
+|-- arduinoFFT @ 2.0 (License: Unknown, Path: /Users/ella/.platformio/lib/arduinoFFT)
+Building in release mode
+avr-g++ -o .pio/build/uno/src/saprobeat.cpp.o -c -fno-exceptions -fno-threadsafe-statics -fpermissive -std=gnu++11 -mmcu=atmega328p -Os -Wall -ffunction-sections -fdata-sections -flto -DPLATFORMIO=60114 -DARDUINO_AVR_UNO -DF_CPU=16000000L -DARDUINO_ARCH_AVR -DARDUINO=10808 -Iinclude -Isrc -I/Users/ella/.platformio/lib/arduinoFFT/src -I/Users/ella/.platformio/lib/MIDI/src -I/Users/ella/.platformio/packages/framework-arduino-avr/cores/arduino -I/Users/ella/.platformio/packages/framework-arduino-avr/variants/standard src/saprobeat.cpp
+avr-g++ -o .pio/build/uno/libbf3/MIDI/MIDI.cpp.o -c -fno-exceptions -fno-threadsafe-statics -fpermissive -std=gnu++11 -mmcu=atmega328p -Os -Wall -ffunction-sections -fdata-sections -flto -DPLATFORMIO=60114 -DARDUINO_AVR_UNO -DF_CPU=16000000L -DARDUINO_ARCH_AVR -DARDUINO=10808 -I/Users/ella/.platformio/lib/MIDI/src -I/Users/ella/.platformio/packages/framework-arduino-avr/cores/arduino -I/Users/ella/.platformio/packages/framework-arduino-avr/variants/standard /Users/ella/.platformio/lib/MIDI/src/MIDI.cpp
+avr-g++ -o .pio/build/uno/libe77/arduinoFFT/arduinoFFT.cpp.o -c -fno-exceptions -fno-threadsafe-statics -fpermissive -std=gnu++11 -mmcu=atmega328p -Os -Wall -ffunction-sections -fdata-sections -flto -DPLATFORMIO=60114 -DARDUINO_AVR_UNO -DF_CPU=16000000L -DARDUINO_ARCH_AVR -DARDUINO=10808 -I/Users/ella/.platformio/lib/arduinoFFT/src -I/Users/ella/.platformio/packages/framework-arduino-avr/cores/arduino -I/Users/ella/.platformio/packages/framework-arduino-avr/variants/standard /Users/ella/.platformio/lib/arduinoFFT/src/arduinoFFT.cpp
+avr-gcc-ar rc .pio/build/uno/libFrameworkArduinoVariant.a
+avr-g++ -o .pio/build/uno/FrameworkArduino/CDC.cpp.o -c -fno-exceptions -fno-threadsafe-statics -fpermissive -std=gnu++11 -mmcu=atmega328p -Os -Wall -ffunction-sections -fdata-sections -flto -DPLATFORMIO=60114 -DARDUINO_AVR_UNO -DF_CPU=16000000L -DARDUINO_ARCH_AVR -DARDUINO=10808 -I/Users/ella/.platformio/packages/framework-arduino-avr/cores/arduino -I/Users/ella/.platformio/packages/framework-arduino-avr/variants/standard /Users/ella/.platformio/packages/framework-arduino-avr/cores/arduino/CDC.cpp
+avr-g++ -o .pio/build/uno/FrameworkArduino/HardwareSerial.cpp.o -c -fno-exceptions -fno-threadsafe-statics -fpermissive -std=gnu++11 -mmcu=atmega328p -Os -Wall -ffunction-sections -fdata-sections -flto -DPLATFORMIO=60114 -DARDUINO_AVR_UNO -DF_CPU=16000000L -DARDUINO_ARCH_AVR -DARDUINO=10808 -I/Users/ella/.platformio/packages/framework-arduino-avr/cores/arduino -I/Users/ella/.platformio/packages/framework-arduino-avr/variants/standard /Users/ella/.platformio/packages/framework-arduino-avr/cores/arduino/HardwareSerial.cpp
+avr-g++ -o .pio/build/uno/FrameworkArduino/HardwareSerial0.cpp.o -c -fno-exceptions -fno-threadsafe-statics -fpermissive -std=gnu++11 -mmcu=atmega328p -Os -Wall -ffunction-sections -fdata-sections -flto -DPLATFORMIO=60114 -DARDUINO_AVR_UNO -DF_CPU=16000000L -DARDUINO_ARCH_AVR -DARDUINO=10808 -I/Users/ella/.platformio/packages/framework-arduino-avr/cores/arduino -I/Users/ella/.platformio/packages/framework-arduino-avr/variants/standard /Users/ella/.platformio/packages/framework-arduino-avr/cores/arduino/HardwareSerial0.cpp
+avr-g++ -o .pio/build/uno/FrameworkArduino/HardwareSerial1.cpp.o -c -fno-exceptions -fno-threadsafe-statics -fpermissive -std=gnu++11 -mmcu=atmega328p -Os -Wall -ffunction-sections -fdata-sections -flto -DPLATFORMIO=60114 -DARDUINO_AVR_UNO -DF_CPU=16000000L -DARDUINO_ARCH_AVR -DARDUINO=10808 -I/Users/ella/.platformio/packages/framework-arduino-avr/cores/arduino -I/Users/ella/.platformio/packages/framework-arduino-avr/variants/standard /Users/ella/.platformio/packages/framework-arduino-avr/cores/arduino/HardwareSerial1.cpp
+avr-g++ -o .pio/build/uno/FrameworkArduino/HardwareSerial2.cpp.o -c -fno-exceptions -fno-threadsafe-statics -fpermissive -std=gnu++11 -mmcu=atmega328p -Os -Wall -ffunction-sections -fdata-sections -flto -DPLATFORMIO=60114 -DARDUINO_AVR_UNO -DF_CPU=16000000L -DARDUINO_ARCH_AVR -DARDUINO=10808 -I/Users/ella/.platformio/packages/framework-arduino-avr/cores/arduino -I/Users/ella/.platformio/packages/framework-arduino-avr/variants/standard /Users/ella/.platformio/packages/framework-arduino-avr/cores/arduino/HardwareSerial2.cpp
+avr-g++ -o .pio/build/uno/FrameworkArduino/HardwareSerial3.cpp.o -c -fno-exceptions -fno-threadsafe-statics -fpermissive -std=gnu++11 -mmcu=atmega328p -Os -Wall -ffunction-sections -fdata-sections -flto -DPLATFORMIO=60114 -DARDUINO_AVR_UNO -DF_CPU=16000000L -DARDUINO_ARCH_AVR -DARDUINO=10808 -I/Users/ella/.platformio/packages/framework-arduino-avr/cores/arduino -I/Users/ella/.platformio/packages/framework-arduino-avr/variants/standard /Users/ella/.platformio/packages/framework-arduino-avr/cores/arduino/HardwareSerial3.cpp
+avr-g++ -o .pio/build/uno/FrameworkArduino/IPAddress.cpp.o -c -fno-exceptions -fno-threadsafe-statics -fpermissive -std=gnu++11 -mmcu=atmega328p -Os -Wall -ffunction-sections -fdata-sections -flto -DPLATFORMIO=60114 -DARDUINO_AVR_UNO -DF_CPU=16000000L -DARDUINO_ARCH_AVR -DARDUINO=10808 -I/Users/ella/.platformio/packages/framework-arduino-avr/cores/arduino -I/Users/ella/.platformio/packages/framework-arduino-avr/variants/standard /Users/ella/.platformio/packages/framework-arduino-avr/cores/arduino/IPAddress.cpp
+avr-g++ -o .pio/build/uno/FrameworkArduino/PluggableUSB.cpp.o -c -fno-exceptions -fno-threadsafe-statics -fpermissive -std=gnu++11 -mmcu=atmega328p -Os -Wall -ffunction-sections -fdata-sections -flto -DPLATFORMIO=60114 -DARDUINO_AVR_UNO -DF_CPU=16000000L -DARDUINO_ARCH_AVR -DARDUINO=10808 -I/Users/ella/.platformio/packages/framework-arduino-avr/cores/arduino -I/Users/ella/.platformio/packages/framework-arduino-avr/variants/standard /Users/ella/.platformio/packages/framework-arduino-avr/cores/arduino/PluggableUSB.cpp
+avr-gcc-ranlib .pio/build/uno/libFrameworkArduinoVariant.a
+src/saprobeat.cpp:8:1: error: invalid use of template-name 'ArduinoFFT' without an argument list
+ ArduinoFFT FFT = arduinoFFT();
+ ^~~~~~~~~~
+src/saprobeat.cpp:8:1: note: class template argument deduction is only available with -std=c++1z or -std=gnu++1z
+In file included from src/saprobeat.cpp:2:0:
+/Users/ella/.platformio/lib/arduinoFFT/src/arduinoFFT.h:94:29: note: 'template<class T> class ArduinoFFT' declared here
+ template <typename T> class ArduinoFFT {
+                             ^~~~~~~~~~
+src/saprobeat.cpp: In function 'void setup()':
+src/saprobeat.cpp:18:24: error: 'noteOnHandler' was not declared in this scope
+   MIDI.setHandleNoteOn(noteOnHandler);
+                        ^~~~~~~~~~~~~
+src/saprobeat.cpp:19:25: error: 'noteOffHandler' was not declared in this scope
+   MIDI.setHandleNoteOff(noteOffHandler);
+                         ^~~~~~~~~~~~~~
+src/saprobeat.cpp: In function 'void noteOnHandler(byte, byte, byte)':
+src/saprobeat.cpp:31:16: error: 'mtof' was not declared in this scope
+   float freq = mtof(note);
+                ^~~~
+src/saprobeat.cpp:31:16: note: suggested alternative: 'atof'
+   float freq = mtof(note);
+                ^~~~
+                atof
+*** [.pio/build/uno/src/saprobeat.cpp.o] Error 1
+========================== [FAILED] Took 0.47 seconds ==========================

@@ -17,17 +17,21 @@
    `---''---`
 ```
 
-## Names
+## Funny Names
 - microbeat = microbe + beat (also doubled as microcontroller beat)
-- phoebeat = phoebe flycatcher + beat
+- **audio -> visual:** phoebeat = phoebe flycatcher + beat
 ![phoebe](./media/phoebe.png)
-- saprobeat (saprobe := decomposer subtype fungi)
+- **visualisor:** saprobeat (saprobe := decomposer subtype fungi)
 ![saprobe](./media/saprobe.jpeg)
-- astilbeat (astilbe := plant w/ tiny white, pink, or red flowers)
+- **audio input:** astilbeat (astilbe := plant w/ tiny white, pink, or red flowers)
 ![astilbe](./media/astilbe.jpeg)
 
 ## Structure
-![Flowchart](./media/flowchart.png)
+### Original Design
+![old design](./media/originalDesign.png)
+
+### Final Design
+![microbeat](./media/microbeat.png)
 
 ## Usage
 - **Accessibility -** Make music accessible to people with low musicality or hearing loss
@@ -47,7 +51,7 @@
 *Starting time: 2024-04-05 7.30pm*
 - Brainstorm & Init structure set up 					- *1h in*
 
-### Ella (saprobeat)
+### Ella (saprobeat & phoebeat)
 - Cpp compile & flash onto uno using platformio (pio) 	- *8h in*
 - Midi -> 4D array										- *9h in*
 - Live BPM detect										- *15h in*
@@ -58,11 +62,21 @@
 - ncurses attempt (visualisor in terminal)				- *24h in*
 - refined visualisor (screen)							- *25h in*
 - update r, g, b, delay & fade while displaying			- *28h in*
-- Extract BPM, volume & pitch from raw audio
+- merged saprobeat into main 							- *28h in*
+- FFT to extract BPM, volume & pitch from raw audio 	- *31h in* (code compiled)
+- Cpp & python binding									- *38h in*
+- python animation design/ update formulas
+- Decide sampling rate, num samples, paddings? (using analogReadResolution())
+- Presentation prep
+	- 5min DJ set
+	- Easter egg for vry loud
 
 
 ### Jack (astilbeat)
-
+- Get audio input
+- Get analog audio onto arduino, can't use USB for this **REMEMBER ADJUST VOLTAGE TO POSSITIVE - negative voltage would demage the Arduino**
+- Presentation prep
+	- explain how it works using theramin?
 
 ## Known issues/ concerns
 - passing 4D array (channel, duration, volume, pitch) might introduce competing issue [multi threads]
@@ -70,7 +84,8 @@
 - imagine a song without drums (detecting BPM)
 
 ## Special thx to
-- Suppliers to hardwares (RGB light, arduino, sound sensors) tha may or may not be present
+- everyone who offered helps
+- Suppliers of hardwares (arduino, sound sensors) tha may or may not be present
 
 
 
