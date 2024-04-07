@@ -47,18 +47,19 @@
 - update r, g, b, delay & fade while displaying			- *28h in*
 - merged saprobeat into main 							- *28h in*
 - FFT to extract BPM, volume & pitch from raw audio 	- *31h in* (code compiled)
-- Allow reading from A0-A5
-- Cpp & python binding
+- Cpp & python binding									- *38h in*
 - python animation design/ update formulas
+- Decide sampling rate, num samples, paddings? (using analogReadResolution())
 - Presentation prep
 	- 5min DJ set
-	- Easter egg?
+	- Easter egg for vry loud
 
 
 ### Jack (astilbeat)
-- Get analog audio onto arduino **REMEMBER ADJUST VOLTAGE TO POSSITIVE**
+- Get audio input
+- Get analog audio onto arduino, can't use USB for this **REMEMBER ADJUST VOLTAGE TO POSSITIVE - negative voltage would demage the Arduino**
 - Presentation prep
-	- explain the principle using theramin?
+	- explain how it works using theramin?
 
 ## Known issues/ concerns
 - passing 4D array (channel, duration, volume, pitch) might introduce competing issue [multi threads]
