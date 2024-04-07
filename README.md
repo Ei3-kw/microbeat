@@ -17,6 +17,13 @@
    `---''---`
 ```
 
+## Structure
+### Original Design
+![old design](./media/originalDesign.png)
+
+### Final Design
+![microbeat](./media/microbeat.png)
+
 ## Funny Names
 - microbeat = microbe + beat (also doubled as microcontroller beat)
 - **audio -> visual:** phoebeat = phoebe flycatcher + beat
@@ -25,13 +32,6 @@
 ![saprobe](./media/saprobe.jpeg)
 - **audio input:** astilbeat (astilbe := plant w/ tiny white, pink, or red flowers)
 ![astilbe](./media/astilbe.jpeg)
-
-## Structure
-### Original Design
-![old design](./media/originalDesign.png)
-
-### Final Design
-![microbeat](./media/microbeat.png)
 
 ## Usage
 - **Accessibility -** Make music accessible to people with low musicality or hearing loss
@@ -46,6 +46,7 @@
 - C++
 - how to flash from ARM chip mac to arduino
 - ncurses
+- passing serial signal via UART
 
 ## Log
 *Starting time: 2024-04-05 7.30pm*
@@ -65,8 +66,9 @@
 - merged saprobeat into main 							- *28h in*
 - FFT to extract BPM, volume & pitch from raw audio 	- *31h in* (code compiled)
 - Cpp & python binding									- *38h in*
-- python animation design/ update formulas
-- Decide sampling rate, num samples, paddings? (using analogReadResolution())
+- python animation design/ update formulas				- *42h in*
+- Decide sampling rate, num samples						- *42h in*
+- paddings? (using analogReadResolution())				- WONT FIX
 - Presentation prep
 	- 5min DJ set
 	- Easter egg for vry loud
@@ -82,6 +84,7 @@
 - passing 4D array (channel, duration, volume, pitch) might introduce competing issue [multi threads]
 - We might want seperate midis for music & environment - BPM read off env would be noisy
 - imagine a song without drums (detecting BPM)
+- sound sensor 1 bit & not accurate
 
 ## Special thx to
 - everyone who offered helps
