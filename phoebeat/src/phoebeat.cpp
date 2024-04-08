@@ -19,7 +19,7 @@ void loop() {
     // Read the raw audio data into an array
     double samples[NUM_SAMPLES];
     for (int i = 0; i < NUM_SAMPLES; i++) {
-        samples[i] = analogRead(14);
+        samples[i] = analogRead(20);
     }
 
     // Perform the FFT on the raw audio data

@@ -47,6 +47,7 @@ class Display(object):
             data = ser.readline().strip().decode()
             try:
                 vol, freq = map(float, data.split(','))
+                # print(data)
             except ValueError:
                 print(data)
                 continue
@@ -81,8 +82,8 @@ class Display(object):
 
     def update(self, bpm, vol, freq):
         # fade [0, 256] <-> vol [0, 120]
-        # self.fade = int(256 - vol*32/15)
-        self.fade = int(256 - vol)%200
+        self.fade = int(self.fade - vol*23/12 + 13*random.randint(-Δ, Δ))%100
+        print(self.fade)
 
         # # delay [0, 69] <-> bpm [74, 220]
         # # f(196) = 6
@@ -100,13 +101,13 @@ class Display(object):
         # rgb <-> freqs
         if freq < 246: # low (< 246Hz)
             self.r = int(freq * 256 / 246)
-        elif 246 <= freq <2500: # mid (246 ~ 2500Hz)
+        elif 246 <= freq < 2500: # mid (246 ~ 2500Hz)
             self.g = int((freq-246) * 256 / 2254)
         else: # hi (> 2500Hz)
             self.b = int((freq-2500) * 256 / 7500)
 
         self.delay = (self.delay + random.randint(-Δ, Δ)) % 69
-        # self.fade = (self.fade + random.randint(-Δ, Δ)) % 200
+        # self.fade = (self.fade + 13*random.randint(-Δ, Δ)) % 200
 
 
 if __name__ == '__main__':
