@@ -1,43 +1,25 @@
 import random
 import pygame
-import numpy as np
-from PIL import Image
-import base64
-
-
 
 # speed of changing
 Δ = 1
-LETTER = '1234567890!@#$%^&*qwertyuiopasdfghjklzxcvbnm'
-font_px = 15
-
-def resize_image(img, nw, nh):
-    img = Image.open(img)
-    w, h = img.size
-    r = min(nw/w, nh/h)
-    return np.asarray(img.resize((int(r*w), int(r*h))))
 
 # ----------------------------------------------------------------------
 class Display(object):
-    def __init__(self, r=0, g=255, b=0, delay=30, fade=21, img=None):
-        pygame.init()
+    def __init__(self, r=0, g=255, b=0, delay=30, fade=21):
         self.r = r
         self.g = g
         self.b = b
         self.delay = delay
         self.fade = fade
         self.running = 0
-        self.img = img
-
 
     def display(self):
+        font_px = 15
+        pygame.init()
         screen_info = pygame.display.Info()
         width = screen_info.current_w
         height = screen_info.current_h
-
-        if self.img:
-            img = np.asarray(Image.open(self.img))
-            w, h = Image.open(self.img).size
 
         winsur = pygame.display.set_mode((width, height))
         font = pygame.font.SysFont('andalemono', 21)
@@ -45,11 +27,14 @@ class Display(object):
         screen = pygame.display.set_mode((width, height), pygame.FULLSCREEN)
         winsur.fill((0, 0, 0))
 
-        drops = [0 for _ in range(int(width / font_px))]
+        LETTER = '1234567890!@#$%^&*qwertyuiopasdfghjklzxcvbnm'
+
+        column = int(width / font_px)
+        drops = [0 for _ in range(column)]
 
         self.running = 1
         while self.running:
-            # # print(self.r, self.g, self.b, self.delay, self.fade)
+            # print(self.r, self.g, self.b, self.delay, self.fade)
             texts = [font.render(LETTER[i], 1, (self.r, self.g, self.b)) for i in range(44)]
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -63,12 +48,6 @@ class Display(object):
             winsur.blit(bg, (0, 0))
             bg.fill(pygame.Color(0, 0, 0, self.fade))
 
-            for i in range(w)[::15]:
-                for j in range(h)[::15]:
-                    if sum(img[j][i][0:3]) > 300:
-                        text = random.choice(texts)
-                        winsur.blit(text, (69+i, j+69))
-
             for i in range(len(drops)):
                 text = random.choice(texts)
                 winsur.blit(text, (i * font_px, drops[i] * font_px))
@@ -76,10 +55,8 @@ class Display(object):
                 if drops[i] * 10 > height or random.random() > 0.95:
                     drops[i] = 0
 
-
-
             pygame.display.flip()
-            # self.update()
+            self.update()
 
     # modify me for different effects
     def update(self):
@@ -88,6 +65,9 @@ class Display(object):
         self.b = (self.b + random.randint(-Δ, Δ)) % 256
         self.delay = (self.delay + random.randint(-Δ, Δ)) % 69
         self.fade = (self.fade + random.randint(-Δ, Δ)) % 200
+
+
+
 
 
 # ------------------------------MULTITHREADING--------------------------------
@@ -189,7 +169,7 @@ class Display(object):
 #         winsur = pygame.display.set_mode((width, height))
 #         font = pygame.font.SysFont('andalemono', 21)
 #         bg = pygame.Surface((width, height), pygame.SRCALPHA, 32).convert_alpha()
-#         screen = pygame.display.set_mode((width, height), pygame.FULLSCREEN) # full screen
+#         # screen = pygame.display.set_mode((width, height), pygame.FULLSCREEN) # full screen
 #         winsur.fill((0, 0, 0))
 
 #         LETTER = '1234567890!@#$%^&*qwertyuiopasdfghjklzxcvbnm'
@@ -239,4 +219,4 @@ class Display(object):
 
 # -----------------------------------------------------------------------
 if __name__ == '__main__':
-    Display(r=200, g=200, b=200, img="logo.jpg").display()
+    Display().display()
