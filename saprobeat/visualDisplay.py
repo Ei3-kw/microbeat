@@ -10,6 +10,7 @@ import base64
 Δ = 1
 LETTER = '1234567890!@#$%^&*qwertyuiopasdfghjklzxcvbnm'
 font_px = 15
+BLACK = (0, 0, 0)
 
 def resize_image(img, nw, nh):
     img = Image.open(img)
@@ -20,7 +21,6 @@ def resize_image(img, nw, nh):
 # ----------------------------------------------------------------------
 class Display(object):
     def __init__(self, r=0, g=255, b=0, delay=30, fade=21, imgs=[]):
-        pygame.init()
         self.r = r
         self.g = g
         self.b = b
@@ -29,6 +29,8 @@ class Display(object):
         self.running = 0
         self.imgs = [np.asarray(Image.open(img)) for img in imgs]
 
+        # initialise pygame & properties
+        pygame.init()
         self.screen_info = pygame.display.Info()
         self.width = self.screen_info.current_w
         self.height = self.screen_info.current_h
@@ -39,24 +41,28 @@ class Display(object):
         self.screen = pygame.display.set_mode((self.width, self.height), pygame.FULLSCREEN)
         self.winsur.fill((0, 0, 0))
 
-    def render(self, texts, img=None, threshold=300):
-        if img is None:
-            img = random.choice(self.imgs)
+    def render(self, texts, img, threshold=300):
         w, h, _ = img.shape
 
-        for i in range(w)[::15]:
-            for j in range(h)[::15]:
+        for i in range(w)[::font_px]:
+            for j in range(h)[::font_px]:
                 if sum(img[j][i][0:3]) > threshold:
                     text = random.choice(texts)
                     self.winsur.blit(text, ((self.width-w)//2+i, j+(self.height-h)//2))
 
 
     def display(self):
-
         drops = [0 for _ in range(int(self.width / font_px))]
 
+        img = random.choice(self.imgs)
+
+        start = -np.inf
+        count = 0
         self.running = 1
+
         while self.running:
+            count += 1
+
             texts = [self.font.render(LETTER[i], 1, (self.r, self.g, self.b)) for i in range(44)]
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -67,13 +73,17 @@ class Display(object):
 
             pygame.time.delay(self.delay)
 
-            self.render(texts)
+            if count == 100: # replace by condition for img to show up (volume > ?)
+                img = random.choice(self.imgs)
+                start = count
+
+            if count < start + 420:
+                self.render(texts, img)
 
             self.winsur.blit(self.bg, (0, 0))
             self.bg.fill(pygame.Color(0, 0, 0, self.fade))
 
-
-
+            # render text drops
             for i in range(len(drops)):
                 text = random.choice(texts)
                 self.winsur.blit(text, (i * font_px, drops[i] * font_px))
