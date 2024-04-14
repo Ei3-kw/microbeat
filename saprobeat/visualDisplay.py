@@ -2,15 +2,13 @@ import random
 import pygame
 import numpy as np
 from PIL import Image
-import base64
 
 
-
-# speed of changing
+# CONSTENTS
 Δ = 1
 LETTER = '1234567890!@#$%^&*qwertyuiopasdfghjklzxcvbnm'
 font_px = 15
-BLACK = (0, 0, 0)
+DURATION = 420
 
 def resize_image(img, nw, nh):
     img = Image.open(img)
@@ -41,6 +39,11 @@ class Display(object):
         self.screen = pygame.display.set_mode((self.width, self.height), pygame.FULLSCREEN)
         self.winsur.fill((0, 0, 0))
 
+        # flags
+        self.rendering = 0
+
+
+    # render img in texts
     def render(self, texts, img, threshold=300):
         w, h, _ = img.shape
 
@@ -51,6 +54,7 @@ class Display(object):
                     self.winsur.blit(text, ((self.width-w)//2+i, j+(self.height-h)//2))
 
 
+    # main display loop
     def display(self):
         drops = [0 for _ in range(int(self.width / font_px))]
 
@@ -64,6 +68,8 @@ class Display(object):
             count += 1
 
             texts = [self.font.render(LETTER[i], 1, (self.r, self.g, self.b)) for i in range(44)]
+
+            # press space to quit
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = 0
@@ -71,19 +77,24 @@ class Display(object):
                     if event.key == pygame.K_SPACE:
                         self.running = 0
 
-            pygame.time.delay(self.delay)
+            pygame.time.delay(self.delay) # text fading
 
-            if count == 100: # replace by condition for img to show up (volume > ?)
-                img = random.choice(self.imgs)
-                start = count
+            if not self.rendering:
+                if count == 69: # replace by condition for img to show up (volume > ?)
+                    self.rendering = 1
+                    img = random.choice(self.imgs)
+                    start = count
 
-            if count < start + 420:
+            if count < start + DURATION:
                 self.render(texts, img)
+            else:
+                self.rendering = 0
 
+            # fading effect
             self.winsur.blit(self.bg, (0, 0))
             self.bg.fill(pygame.Color(0, 0, 0, self.fade))
 
-            # render text drops
+            # display text drops
             for i in range(len(drops)):
                 text = random.choice(texts)
                 self.winsur.blit(text, (i * font_px, drops[i] * font_px))
@@ -96,6 +107,8 @@ class Display(object):
 
     # modify me for different effects
     def update(self):
+
+        # random
         self.r = (self.r + random.randint(-Δ, Δ)) % 256
         self.g = (self.g + random.randint(-Δ, Δ)) % 256
         self.b = (self.b + random.randint(-Δ, Δ)) % 256
@@ -252,4 +265,4 @@ class Display(object):
 
 # -----------------------------------------------------------------------
 if __name__ == '__main__':
-    Display(r=200, g=200, b=200, imgs=["logo.jpg"]).display()
+    Display(imgs=["logo.jpg"]).display()
