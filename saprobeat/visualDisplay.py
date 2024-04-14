@@ -19,7 +19,7 @@ def resize_image(img, nw, nh):
 
 # ----------------------------------------------------------------------
 class Display(object):
-    def __init__(self, r=0, g=255, b=0, delay=30, fade=21, img=None):
+    def __init__(self, r=0, g=255, b=0, delay=30, fade=21, imgs=[]):
         pygame.init()
         self.r = r
         self.g = g
@@ -27,30 +27,37 @@ class Display(object):
         self.delay = delay
         self.fade = fade
         self.running = 0
-        self.img = img
+        self.imgs = [np.asarray(Image.open(img)) for img in imgs]
+
+        self.screen_info = pygame.display.Info()
+        self.width = self.screen_info.current_w
+        self.height = self.screen_info.current_h
+        self.winsur = pygame.display.set_mode((self.width, self.height))
+        self.font = pygame.font.SysFont('andalemono', 21)
+        self.bg = pygame.Surface((self.width, self.height),
+            pygame.SRCALPHA, 32).convert_alpha()
+        self.screen = pygame.display.set_mode((self.width, self.height), pygame.FULLSCREEN)
+        self.winsur.fill((0, 0, 0))
+
+    def render(self, texts, img=None, threshold=300):
+        if img is None:
+            img = random.choice(self.imgs)
+        w, h, _ = img.shape
+
+        for i in range(w)[::15]:
+            for j in range(h)[::15]:
+                if sum(img[j][i][0:3]) > threshold:
+                    text = random.choice(texts)
+                    self.winsur.blit(text, ((self.width-w)//2+i, j+(self.height-h)//2))
 
 
     def display(self):
-        screen_info = pygame.display.Info()
-        width = screen_info.current_w
-        height = screen_info.current_h
 
-        if self.img:
-            img = np.asarray(Image.open(self.img))
-            w, h = Image.open(self.img).size
-
-        winsur = pygame.display.set_mode((width, height))
-        font = pygame.font.SysFont('andalemono', 21)
-        bg = pygame.Surface((width, height), pygame.SRCALPHA, 32).convert_alpha()
-        screen = pygame.display.set_mode((width, height), pygame.FULLSCREEN)
-        winsur.fill((0, 0, 0))
-
-        drops = [0 for _ in range(int(width / font_px))]
+        drops = [0 for _ in range(int(self.width / font_px))]
 
         self.running = 1
         while self.running:
-            # # print(self.r, self.g, self.b, self.delay, self.fade)
-            texts = [font.render(LETTER[i], 1, (self.r, self.g, self.b)) for i in range(44)]
+            texts = [self.font.render(LETTER[i], 1, (self.r, self.g, self.b)) for i in range(44)]
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = 0
@@ -60,26 +67,22 @@ class Display(object):
 
             pygame.time.delay(self.delay)
 
-            winsur.blit(bg, (0, 0))
-            bg.fill(pygame.Color(0, 0, 0, self.fade))
+            self.render(texts)
 
-            for i in range(w)[::15]:
-                for j in range(h)[::15]:
-                    if sum(img[j][i][0:3]) > 300:
-                        text = random.choice(texts)
-                        winsur.blit(text, (69+i, j+69))
+            self.winsur.blit(self.bg, (0, 0))
+            self.bg.fill(pygame.Color(0, 0, 0, self.fade))
+
+
 
             for i in range(len(drops)):
                 text = random.choice(texts)
-                winsur.blit(text, (i * font_px, drops[i] * font_px))
+                self.winsur.blit(text, (i * font_px, drops[i] * font_px))
                 drops[i] += 1
-                if drops[i] * 10 > height or random.random() > 0.95:
+                if drops[i] * 10 > self.height or random.random() > 0.95:
                     drops[i] = 0
 
-
-
             pygame.display.flip()
-            # self.update()
+            self.update()
 
     # modify me for different effects
     def update(self):
@@ -239,4 +242,4 @@ class Display(object):
 
 # -----------------------------------------------------------------------
 if __name__ == '__main__':
-    Display(r=200, g=200, b=200, img="logo.jpg").display()
+    Display(r=200, g=200, b=200, imgs=["logo.jpg"]).display()
