@@ -2,6 +2,7 @@ import random
 import pygame
 import numpy as np
 from PIL import Image
+import pyaudio
 
 
 # CONSTENTS
@@ -9,6 +10,9 @@ from PIL import Image
 LETTER = '1234567890!@#$%^&*qwertyuiopasdfghjklzxcvbnm'
 font_px = 15
 DURATION = 420
+RATE = 44100
+CHUNK = 2048
+CHANNEL = 1 # 2 would be better :/
 
 def resize_image(img, nw, nh):
     img = Image.open(img)
@@ -27,7 +31,7 @@ class Display(object):
         self.running = 0
         self.imgs = [np.asarray(Image.open(img)) for img in imgs]
 
-        # initialise pygame & properties
+        # initialise pygame & friends
         pygame.init()
         self.screen_info = pygame.display.Info()
         self.width = self.screen_info.current_w
@@ -41,6 +45,18 @@ class Display(object):
 
         # flags
         self.rendering = 0
+
+        # initialise pyaudio & friends
+        p = pyaudio.PyAudio()
+        self.stream = p.open(format=pyaudio.paInt16, channels=CHANNEL, rate=RATE, input=True, frames_per_buffer=CHUNK)
+
+    def read_audio(self):
+        data = np.frombuffer(self.stream.read(CHUNK),dtype=np.int16)
+        results = np.fft.rfft(data)
+        freqs = np.fft.rfftfreq(results.size, d=1.0/RATE)
+        results /= np.max(np.abs(results))
+        print(freqs, results)
+        return freqs, results
 
 
     # render img in texts
@@ -66,6 +82,8 @@ class Display(object):
 
         while self.running:
             count += 1
+
+            self.read_audio()
 
             texts = [self.font.render(LETTER[i], 1, (self.r, self.g, self.b)) for i in range(44)]
 
