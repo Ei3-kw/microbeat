@@ -9,10 +9,11 @@ import pyaudio
 Δ = 1
 LETTER = '1234567890!@#$%^&*qwertyuiopasdfghjklzxcvbnm'
 font_px = 15
+FORMAT = pyaudio.paInt16
 DURATION = 420
 RATE = 44100
 CHUNK = 2048
-CHANNEL = 1 # 2 would be better :/
+CHANNEL = 1
 
 def resize_image(img, nw, nh):
     img = Image.open(img)
@@ -46,16 +47,26 @@ class Display(object):
         # flags
         self.rendering = 0
 
-        # initialise pyaudio & friends
+        self.stream_init()
+
+
+    # initialise pyaudio & friends
+    def stream_init(self):
         p = pyaudio.PyAudio()
-        self.stream = p.open(format=pyaudio.paInt16, channels=CHANNEL, rate=RATE, input=True, frames_per_buffer=CHUNK)
+        self.stream = p.open(format=FORMAT,
+            channels=CHANNEL,
+            rate=RATE,
+            input=True,
+            frames_per_buffer=CHUNK)
+
 
     def read_audio(self):
-        data = np.frombuffer(self.stream.read(CHUNK),dtype=np.int16)
+        data = self.stream.read(CHUNK, exception_on_overflow=0)
+        data = np.frombuffer(data,dtype=np.int16)
         results = np.fft.rfft(data)
         freqs = np.fft.rfftfreq(results.size, d=1.0/RATE)
         results /= np.max(np.abs(results))
-        print(freqs, results)
+        # print(freqs)
         return freqs, results
 
 
@@ -83,7 +94,6 @@ class Display(object):
         while self.running:
             count += 1
 
-            self.read_audio()
 
             texts = [self.font.render(LETTER[i], 1, (self.r, self.g, self.b)) for i in range(44)]
 
@@ -96,6 +106,14 @@ class Display(object):
                         self.running = 0
 
             pygame.time.delay(self.delay) # text fading
+
+            # cursed, but just in case
+            try:
+                self.read_audio()
+            except OSError as e:
+                self.stream_init()
+                print(count)
+                continue
 
             if not self.rendering:
                 if count == 69: # replace by condition for img to show up (volume > ?)
