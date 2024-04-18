@@ -14,6 +14,7 @@ DURATION = 420
 RATE = 44100
 CHUNK = 2048
 CHANNEL = 1
+N = 10
 
 def resize_image(img, nw, nh):
     img = Image.open(img)
@@ -61,13 +62,16 @@ class Display(object):
 
 
     def read_audio(self):
-        data = self.stream.read(CHUNK, exception_on_overflow=0)
-        data = np.frombuffer(data,dtype=np.int16)
+        data = np.frombuffer(self.stream.read(CHUNK, exception_on_overflow=0),
+            dtype=np.int16)
         results = np.fft.rfft(data)
-        freqs = np.fft.rfftfreq(results.size, d=1.0/RATE)
-        results /= np.max(np.abs(results))
-        # print(freqs)
-        return freqs, results
+        freqs = np.fft.rfftfreq(len(data), d=1.0/RATE)
+        # extract frequencies associated with FFT values
+        top_N = np.argsort(np.abs(results))[-N:][::-1]
+
+        print(list(zip(freqs[top_N], 20 * np.log10(np.abs(results)[top_N]))))
+        print()
+        return freqs[top_N], 20 * np.log10(np.abs(results)[top_N])
 
 
     # render img in texts
@@ -112,7 +116,7 @@ class Display(object):
                 self.read_audio()
             except OSError as e:
                 self.stream_init()
-                print(count)
+                print(count, e)
                 continue
 
             if not self.rendering:
@@ -139,17 +143,19 @@ class Display(object):
                     drops[i] = 0
 
             pygame.display.flip()
-            self.update()
+            self.update(0)
 
     # modify me for different effects
-    def update(self):
+    def update(self, random=1):
+        if random:
+            # random
+            self.r = (self.r + random.randint(-Δ, Δ)) % 256
+            self.g = (self.g + random.randint(-Δ, Δ)) % 256
+            self.b = (self.b + random.randint(-Δ, Δ)) % 256
+            self.delay = (self.delay + random.randint(-Δ, Δ)) % 69
+            self.fade = (self.fade + random.randint(-Δ, Δ)) % 200
 
-        # random
-        self.r = (self.r + random.randint(-Δ, Δ)) % 256
-        self.g = (self.g + random.randint(-Δ, Δ)) % 256
-        self.b = (self.b + random.randint(-Δ, Δ)) % 256
-        self.delay = (self.delay + random.randint(-Δ, Δ)) % 69
-        self.fade = (self.fade + random.randint(-Δ, Δ)) % 200
+
 
 
 # ------------------------------MULTITHREADING--------------------------------
