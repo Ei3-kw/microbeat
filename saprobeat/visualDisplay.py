@@ -69,8 +69,6 @@ class Display(object):
         # extract frequencies associated with FFT values
         top_N = np.argsort(np.abs(results))[-N:][::-1]
 
-        print(list(zip(freqs[top_N], 20 * np.log10(np.abs(results)[top_N]))))
-        print()
         return freqs[top_N], 20 * np.log10(np.abs(results)[top_N])
 
 
@@ -113,14 +111,15 @@ class Display(object):
 
             # cursed, but just in case
             try:
-                self.read_audio()
+                freqs, vols = self.read_audio()
+                # print(max(vols))
             except OSError as e:
                 self.stream_init()
                 print(count, e)
                 continue
 
             if not self.rendering:
-                if count == 69: # replace by condition for img to show up (volume > ?)
+                if max(vols) > 120 or count%420 == 0: # replace by condition for img to show up (volume > ?)
                     self.rendering = 1
                     img = random.choice(self.imgs)
                     start = count
@@ -132,28 +131,41 @@ class Display(object):
 
             # fading effect
             self.winsur.blit(self.bg, (0, 0))
-            self.bg.fill(pygame.Color(0, 0, 0, self.fade))
+            try:
+                self.bg.fill(pygame.Color(0, 0, 0, self.fade))
+            except ValueError as e:
+                print(self.fade)
 
             # display text drops
             for i in range(len(drops)):
                 text = random.choice(texts)
                 self.winsur.blit(text, (i * font_px, drops[i] * font_px))
                 drops[i] += 1
-                if drops[i] * 10 > self.height or random.random() > 0.95:
+                if drops[i] * 10 > self.height-200 or random.random() > 0.95:
                     drops[i] = 0
 
             pygame.display.flip()
-            self.update(0)
+            self.update()
 
     # modify me for different effects
-    def update(self, random=1):
-        if random:
+    def update(self, freqs=None, vols=None):
+        self.delay = (self.delay + random.randint(-Δ, Δ)) % 69
+        self.fade = max(1, min((self.fade + random.randint(-Δ, Δ)), 200))
+        if freqs is None:
             # random
             self.r = (self.r + random.randint(-Δ, Δ)) % 256
             self.g = (self.g + random.randint(-Δ, Δ)) % 256
             self.b = (self.b + random.randint(-Δ, Δ)) % 256
-            self.delay = (self.delay + random.randint(-Δ, Δ)) % 69
-            self.fade = (self.fade + random.randint(-Δ, Δ)) % 200
+        else:
+            print(freqs)
+            for freq in freqs:
+                # rgb <-> freqs
+                if freq < 246: # low (< 246Hz)
+                    self.r = int(freq * 256 / 246)
+                elif 246 <= freq < 2500: # mid (246 ~ 2500Hz)
+                    self.g = int((freq-246) * 256 / 2254)
+                else: # hi (> 2500Hz)
+                    self.b = int((freq-2500) * 256 / 7500)
 
 
 
